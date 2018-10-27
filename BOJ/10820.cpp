@@ -16,16 +16,8 @@ int main(void){
    int tarr[4] = { 10, 2, 0, 2};
    int arr_len = sizeof(tarr)/sizeof(tarr[0]);
    
-   //print_arr(tarr, arr_len);
    string test_str = "This is String";
    
-   // if(test_solution( test_str , tarr, arr_len)){
-   //   cout << "Success";
-   // }else{
-   //   cout << "Fail";
-   //}
-
-	// checker_str(input_str);
 	while(!(cin >> input_str )){
 		print_arr(checker_str(input_str), arr_len);
 	}
