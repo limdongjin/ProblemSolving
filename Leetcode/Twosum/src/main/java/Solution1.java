@@ -13,7 +13,7 @@ class Solution1{
                 }
             }
         }
-        return new int[]{0, 1};
+        return new int[2];
     }
     // Runtime: 47 ms, faster than 15.54% of Java online submissions for Two Sum.
 }

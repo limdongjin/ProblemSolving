@@ -14,8 +14,12 @@ class Solution2 {
                 return new int[]{i, resIdx + i + 1};
             }
         }
+//        System.out.println();
+
         return new int[]{0, 1};
     }
+
+
 
     private int indexOf(int[] nums, int target){
         int nums_length = nums.length;
