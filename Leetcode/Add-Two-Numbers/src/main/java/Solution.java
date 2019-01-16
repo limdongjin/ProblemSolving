@@ -12,10 +12,14 @@ public class Solution {
 
         sum = sumNode(point1, point2);
 
-        if(sum >= 10){
-            sum -= 10;
-            carry = 1;
-        }
+//        if(sum >= 10){
+//            sum -= 10;
+//            carry = 1;
+//        }
+
+        carry = sum / 10;
+        sum = sum % 10;
+
         res = new ListNode(sum);
 
         point1 = point1.next;
@@ -26,12 +30,16 @@ public class Solution {
 
             sum = sumNode(point1, point2);
             sum += carry;
-            carry = 0;
 
-            if(sum >= 10) {
-                sum -= 10;
-                carry = 1;
-            }
+//            carry = 0;
+//            if(sum >= 10) {
+//                sum -= 10;
+//                carry = 1;
+//            }
+
+            carry = sum / 10;
+            sum = sum % 10;
+
             node = new ListNode(sum);
 
             point3.next = node;
@@ -47,6 +55,7 @@ public class Solution {
 
         return res;
     }
+
     private static int sumNode(ListNode point1, ListNode point2){
         int sum = 0;
         if(point1 != null) sum += point1.val;
