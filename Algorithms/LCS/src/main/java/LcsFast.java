@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.HashMap;
-
 public class LcsFast {
     private int[][] cache;
     public final int length(final String x, final String y){
