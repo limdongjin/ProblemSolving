@@ -8,13 +8,15 @@ public class LcsIteration {
             for(int yi = 0; yi < yLength; yi++) {
                 boolean isSameChar = (x.charAt(xi) == y.charAt(yi));
                 boolean isZeroXiOrYi = (xi == 0 || yi == 0);
+                boolean isZeroXi = (xi == 0);
+                boolean isZeroYi = (yi == 0);
                 if(isSameChar && !isZeroXiOrYi){
                     cache[xi][yi] = cache[xi - 1][yi -1] + 1;
                 }else if(isSameChar){
                     cache[xi][yi] = 1;
                 }else if(isZeroXiOrYi){
-                    if(xi == 0 && yi != 0) cache[xi][yi] = cache[xi][yi - 1];
-                    else if(xi != 0) cache[xi][yi] = cache[xi - 1][yi];
+                    if(isZeroXi && !isZeroYi) cache[xi][yi] = cache[xi][yi - 1];
+                    else if(!isZeroXi) cache[xi][yi] = cache[xi - 1][yi];
                 }else{
                     cache[xi][yi] = Math.max(cache[xi - 1][yi], cache[xi][yi - 1]);
                 }
