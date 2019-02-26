@@ -1,8 +1,9 @@
 #include <cstdio>
-#include <assert.h>
+#include <cassert>
+
 typedef struct Human{
-    int mother;
-    int farther;
+    int mother{};
+    int farther{};
     int status = 1;
 } Human;
 Human *Humans[501];
@@ -24,7 +25,7 @@ int initHumans(){
     int m, idx = 1, mother, farther, tmp;
     tmp = n;
     while(tmp--){
-        Human* h = new Human;
+        Human * h = new Human;
         scanf("%d %d", &mother, &farther);
         h->mother = mother;
         h->farther = farther;
