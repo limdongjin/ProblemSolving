@@ -1,5 +1,6 @@
 cmake-build-debug
 a.out
+.idea
 # built application files
 *.apk
 *.ap_

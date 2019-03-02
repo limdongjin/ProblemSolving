@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.13)
 project(CppFirstWorkspace)
 
 set(CMAKE_CXX_STANDARD 14)
-add_executable(CppFirstWorkspace 13133.cpp)
+add_executable(CppFirstWorkspace ./Programmers/42585.cpp)
