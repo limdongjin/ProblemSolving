@@ -4,6 +4,12 @@
 - Implement algorithms and data structures
 - Test based.
 
+## Problem Platform
+
+- LeetCode(https://leetcode.com)
+- BOJ (https://www.acmicpc.net)
+- Programmers(https://programmers.co.kr)
+
 ## Programming Language
 
 - c++
@@ -22,8 +28,9 @@ In Python or c ++,
 I only test with assert because i have considered a coding interview environment 
 that is restricted from using the library.
 
-## Platform
+## Environment
 
-- LeetCode(https://leetcode.com)
-- BOJ (https://www.acmicpc.net)
-- Programmers(https://programmers.co.kr)
+- OS: Mac OS
+- c++: CLion
+- java: IntelliJ IDEA ultimate
+- python: Pycharm professional
