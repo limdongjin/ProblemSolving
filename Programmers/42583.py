@@ -42,6 +42,3 @@ def test_solution():
 
 test_solution()
 
-n, bridge_length, weight = map(int, input().split())
-truck_weights = list(map(int, input().split()))
-print(solution(bridge_length, weight, truck_weights))
