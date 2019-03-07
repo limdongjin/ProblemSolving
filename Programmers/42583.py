@@ -12,7 +12,6 @@ def solution(bridge_length, weight, truck_wheights):
     ing_trucks = []
     trucks = []
     ing_wheight = 0
-    flag = 0
     answer = 0
     for truck_wheight in truck_wheights:
         trucks.append(Node(truck_wheight))
