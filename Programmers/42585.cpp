@@ -1,6 +1,6 @@
 /*
  * https://programmers.co.kr/learn/courses/30/lessons/42585
-* 문제 제목: 쇠막대기
+*  문제 제목: 쇠막대기
 */
 #include <cstdio>
 #include <string>

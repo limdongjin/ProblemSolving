@@ -1,5 +1,3 @@
-# https://programmers.co.kr/learn/courses/30/lessons/42583?language=python3
-# 문제 제목: 다리를 지나는 트럭
 
 
 class Node:
