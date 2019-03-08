@@ -80,16 +80,12 @@ def test_solution():
 
 
 def test_possible_numbers():
-    assert possible_numbers("17").count(1) == 1
-    assert possible_numbers("17").count(71) == 1
-    assert possible_numbers("17").count(17) == 1
-    assert possible_numbers("17").count(7) == 1
-
-    assert possible_numbers("011").count(1) == 1
-    assert possible_numbers("011").count(10) == 1
-    assert possible_numbers("011").count(101) == 1
-    assert possible_numbers("011").count(0) == 1
-    assert len(possible_numbers("011")) == 6
+    p1 = possible_numbers("17")
+    p1.sort()
+    assert p1 == [1, 7, 17, 71]
+    p2 = possible_numbers("011")
+    p2.sort()
+    assert p2 == [0, 1, 10, 11, 101, 110]
 
 
 def test_permutations():
