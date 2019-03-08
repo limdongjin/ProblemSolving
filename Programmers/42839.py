@@ -26,10 +26,7 @@ def possible_numbers(numbers):
     result = []
     for i in range(1, len(numbers) + 1):
         for tup in permutations(numbers, r=i):
-            number = ""
-            for c in tup:
-                number += c
-            result.append(int(number))
+            result.append(int("".join(tup)))
     return list(set(result))
 
 
