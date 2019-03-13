@@ -11,7 +11,7 @@ def solution(arr):
 def test_solution():
     assert solution([1,2,3,4,5]) == 3
     assert solution([1, 2, 3, 4]) == 2.5
-    assert solution(5, 5) == 5
+    assert solution([5, 5]) == 5
 
 
 test_solution()
