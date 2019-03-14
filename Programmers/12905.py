@@ -76,7 +76,7 @@ def test_solution():
     assert solution([[1, 1, 0], [1,0,0]]) == 1
     assert solution([[1, 1, 0], [1,1,0]]) == 4
     assert solution([[0],[0]]) == 0
-    assert solution([[1, 1, 0, 0, 1, 1, 1], [0, 0,0,0,1,1,1]]) == 4
+    assert solution([[1, 1, 0, 0, 1, 1, 1], [0, 0, 0, 0, 1, 1, 1]]) == 4
 
 
 test_solution()
