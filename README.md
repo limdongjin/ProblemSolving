@@ -7,7 +7,12 @@
 ## Problems
 
 * [LeetCode](/LeetCode/)
-    * ddd
+
+| 문제번호    | 문제이름    | 문제유형 | 문제설명 |풀이 설명|
+|:--------:| :------: | :--------: | :--------: | :--------: |
+|1|Two Sum|기본/해시맵|.|[풀이 설명](https://limdongjin.github.io/problemsolving/twosum.html)|
+|2|Add Two Numbers|기본|.|[풀이 설명](https://limdongjin.github.io/problemsolving/add-two-numbers.html)|
+|3|Longest Substring Without Repeating Characters|문자열/set|.|[풀이 설명](https://limdongjin.github.io/problemsolving/Longest-Substring-Without-Repeating-Characters.html)|
 
 * [BOJ](/Boj/)
 
@@ -25,7 +30,6 @@
 |2775|부녀회장이 될테야|기본|.|.|
 |2941|크로아티아 알파넷|기본|.|.|
 
-        
 * Programmers
 
 ## Problem Platform
