@@ -60,6 +60,7 @@
 #     while heap.data[0] < K and heap.length != 0:
 #         if heap.length == 1:
 #             return -1
+#         # print(heap.data)
 #         first = heap.remove()
 #         second = heap.remove()
 #         heap.insert(first + (2 * second))
