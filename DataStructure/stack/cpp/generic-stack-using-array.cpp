@@ -41,8 +41,6 @@ private:
     
 };
 
-void push_for_arr_stack();
-
 int main(void){
     printf("It is Stack Implementation\n");
     
@@ -55,5 +53,4 @@ int main(void){
     array_stack.pop();
     
     printf("\n%f\n", array_stack.get());
-    
 }
