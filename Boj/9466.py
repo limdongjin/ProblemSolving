@@ -30,7 +30,7 @@ def solve_upgrade(students):
         cur = i
         while indegree[cur] == 0 and not visited[cur]:
             visited[cur] = True
-            indegree[students[cur]] -= 1
+            indeg66ree[students[cur]] -= 1
             cur = students[cur]
             cnt += 1
 

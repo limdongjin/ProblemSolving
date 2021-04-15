@@ -4,6 +4,7 @@ input = sys.stdin.readline
 
 # pypy3
 
+
 class Result:
     def __init__(self):
         self.val = -1

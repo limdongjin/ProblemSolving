@@ -45,13 +45,13 @@ def bfs(board, visited, pos, color, option):
     queue = deque()
     queue.append(pos)
     visited[pos[0]][pos[1]] = True
+
     n = len(board)
     while queue:
         r, c = queue.popleft()
-        # visited[r][c] = True
-        for direction in directions:
-            nr = r + direction[0]
-            nc = c + direction[1]
+        for dy, dx in directions:
+            nr = r + dy
+            nc = c + dx
             if nr < 0 or nc < 0 or nr >= n or nc >= n:
                 continue
             if visited[nr][nc]:

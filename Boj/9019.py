@@ -11,54 +11,13 @@ class Op(Enum):
     R = 4
 
 
-input = sys.stdin.readline
-
-
 def main():
+    input = sys.stdin.readline
     tc = int(input())
     for _ in range(tc):
         a, b = [int(_) for _ in input().split()]
 
         print(solve(a, b))
-
-
-def op_execute(num, op):
-    op_map = {Op.D: op_d, Op.S: op_s, Op.L: op_l, Op.R: op_r}
-    return op_map[op](num)
-
-
-def op_d(num):
-    return (num * 2) % 10000
-
-
-def op_l(num):
-    return (num % 1000) * 10 + num // 1000
-
-
-def op_r(num):
-    return (num % 10) * 1000 + num // 10
-
-
-def op_s(num):
-    if num == 0:
-        return 9999
-    return num - 1
-
-
-def get_history(dic, dest):
-    ret = []
-    cur = dest
-
-    while cur != -1:
-        op = dic[cur][1]
-        if op == Op.ROOT:
-            break
-        ret.append(op.name)
-        cur = dic[cur][0]
-
-    ret.reverse()
-
-    return ''.join(ret)
 
 
 def solve(a, b):
@@ -90,6 +49,33 @@ def solve(a, b):
                 d[v] = d[num] + 1
                 dic[v] = (num, op)
                 queue.append(v)
+
+
+def op_execute(num, op):
+    op_d = lambda: (num * 2) % 10000
+    op_s = lambda: num - 1 if num != 0 else 9999
+    op_l = lambda: (num % 1000) * 10 + num // 1000
+    op_r = lambda: (num % 10) * 1000 + num // 10
+
+    op_map = {Op.D: op_d, Op.S: op_s, Op.L: op_l, Op.R: op_r}
+
+    return op_map[op]()
+
+
+def get_history(dic, dest):
+    ret = []
+    cur = dest
+
+    while cur != -1:
+        op = dic[cur][1]
+        if op == Op.ROOT:
+            break
+        ret.append(op.name)
+        cur = dic[cur][0]
+
+    ret.reverse()
+
+    return ''.join(ret)
 
 
 main()

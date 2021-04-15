@@ -1,117 +1,103 @@
 from collections import deque
 
+
 board = []
-
-
 def main():
     n = int(input())
     global board
-    board = [[0] * n for _ in range(n)]
-
-    pos = None
+    board = [[0]*n for i in range(n)]
+    shark = None
     for y in range(n):
         s = input().split()
         for x in range(n):
             board[y][x] = int(s[x])
             if board[y][x] == 9:
-                pos = (y, x)
+                shark = (y, x)
                 board[y][x] = 0
 
     sec = 0
-    fish_cnt = 0
     size = 2
+    fish_cnt = 0
     while True:
-        # print('bfs sec=', sec, 'size=', size, 'pos=', pos)
-        ret = bfs(pos, size)
-        if not ret:
+        # print_board(shark)
+        new_shark, time = bfs(shark, size)
+        if new_shark[0] is None:
             print(sec)
             break
 
-        # 잡은 물고기, 걸린 시간
-        pos, diffsec = ret
-
-        # 잡은 물고기 개수를 1 증가
         fish_cnt += 1
-
-        if size == fish_cnt:
-            size += 1 # 사이즈업
+        if fish_cnt == size:
+            size += 1
             fish_cnt = 0
-
-        # 잡은 물고기의 위치는 빈칸으로 설정
-        board[pos[0]][pos[1]] = 0
-
-        # 시간을 증가시킨다.
-        sec += diffsec
-
-        # for r in range(len(board)):
-        #     print(r, '  ', end='')
-        #     for c in range(len(board[0])):
-        #         if r == pos[0] and c == pos[1]:
-        #             print('@', end='')
-        #         else:
-        #             print(board[r][c], end='')
-        #     print()
+        # print(new_shark)
+        board[new_shark[0]][new_shark[1]] = 0
+        sec += time
+        shark = new_shark
 
 
-# 방향 기반 우선순위 탐색은 제대로 작동하지않는다.
-# 그래서 잡을수있는 물고기 다 찾고, 로직으로 우선순위를 검증해야한다.
-directions = [(-1, 0), (0, -1), (0, 1), (1, 0)]
+def print_board(pos):
+    for y in range(len(board)):
+        print(y, end='   ')
+        for x in range(len(board)):
+            if y == pos[0] and x == pos[1]:
+                print('#', end='')
+            else:
+                print(board[y][x], end='')
+        print()
 
 
+dirs = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 def bfs(pos, size):
+    global board
     queue = deque()
-    queue.append((pos[0], pos[1], 0))  # pos, sec
-    visited = [[False] * len(board[0]) for i in range(len(board))]
-    ret = None
+    queue.append((pos, 0))
+    visited = [[False]*len(board) for i in range(len(board))]
+    visited[pos[0]][pos[1]] = True
+
+    prev_y, prev_x = None, None
+    prev_time = None
     while queue:
-        y, x, sec = queue.popleft()
-        # print('y=',y,'x=',x,'sec=',sec)
-        for dy, dx in directions:
+        yx, time = queue.popleft()
+        y,x = yx
+        for dy, dx in dirs:
             ny = y + dy
             nx = x + dx
-            # print('ny=',ny,'nx=',nx,'sec=',sec, 'direc=',(dy,dx))
-
-            # 범위 초과
-            if ny < 0 or nx < 0 or ny >= len(board) or nx >= len(board[0]):
+            if ny < 0 or nx < 0 or nx >= len(board) or ny >= len(board):
                 continue
-            # 큰 물고기
-            if board[ny][nx] > size:
-                continue
-            # 이미 방문
             if visited[ny][nx]:
                 continue
-            # 사이즈가 같은 물고기 또는 빈칸
+            if board[ny][nx] > size:
+                continue
             if board[ny][nx] == size or board[ny][nx] == 0:
-                queue.append((ny, nx, sec + 1))
+                queue.append(((ny, nx), time+1))
                 visited[ny][nx] = True
                 continue
-            # print('catch? ', (ny, nx, sec + 1))
 
-            # 첫 물고기
-            if ret is None:
-                # print('[c0]old=', ret, 'new=', (ny,nx,sec+1))
-                ret = ((ny, nx), sec + 1)
+            # 처음 잡는 놈은 일단 잡는다.
+            if prev_time is None:
+                queue.append(((ny, nx), time+1))
                 visited[ny][nx] = True
-            # 이전 물고기보다 시간이 적게 걸리므로, 이 물고기를 잡는다.
-            elif ret[1] > sec + 1:
-                # print('[c00]old=', ret, 'new=', (ny,nx,sec+1))
-                ret = ((ny, nx), sec + 1)
-                visited[ny][nx] = True
-            # 이전 물고기와 시간이 같은 경우
-            elif ret[1] == sec + 1:
-                # 기존 물고기보다 위에 있기에 잡는다.
-                # y 축은 값이 작을수록 위에 있다
-                if ret[0][0] > ny:
-                    # print('[c2]old=', ret, 'new=', (ny,nx,sec+1))
-                    ret = ((ny, nx), sec + 1)
-                    visited[ny][nx] = True
-                # y 좌표는 같은 상황에서, 기존 물고기보다 왼쪽이므로 잡는다.
-                elif ret[0][0] == ny and ret[0][1] > nx:
-                    # print('[c3]old=', ret, 'new=', (ny,nx,sec+1))
-                    ret = ((ny, nx), sec + 1)
-                    visited[ny][nx] = True
-    # print('finally catch! ', ret)
-    return ret
+                prev_y, prev_x, prev_time = ny, nx, time + 1
+                continue
 
+            # 가장 가까운놈 처리
+            if prev_time > time + 1:
+                queue.append(((ny, nx), time+1))
+                visited[ny][nx] = True
+                prev_y, prev_x, prev_time = ny, nx, time +1
+            # 가장 위에놈 처리
+            elif prev_time == time + 1 and prev_y > ny:
+                queue.append(((ny, nx), time+1))
+                visited[ny][nx] = True
+                prev_y, prev_x, prev_time = ny, nx, time +1
+                continue
+            # 가장 왼쪽놈 처리
+            elif prev_time == time + 1 and prev_y == ny and prev_x > nx:
+                queue.append(((ny, nx), time+1))
+                visited[ny][nx] = True
+                prev_y, prev_x, prev_time = ny, nx, time +1
+                continue
+
+    return (prev_y, prev_x), prev_time
 
 main()
