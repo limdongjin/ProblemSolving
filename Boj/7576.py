@@ -9,7 +9,7 @@ def bfs(box_map: List, queue: Deque['tuple']):
     dx = [0, 1, 0, -1]
     dy = [-1, 0, 1, 0]
 
-    while queue:
+    while len(queue) != 0:
         qsize = len(queue)
         for _ in range(qsize):
             r, c = queue.popleft()
