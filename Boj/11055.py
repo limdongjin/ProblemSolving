@@ -11,12 +11,7 @@ def main():
     D = A[:]
 
     for i in range(n):
-        m = 0
-        for j in range(i):
-            if A[j] < A[i] and m < D[j]:
-                m = D[j]
-        
-        D[i] += m
+        D[i] += max([D[j] for j in range(i) if A[j] < A[i]]+[0])
     
     print(max(D))
 main()
