@@ -4,7 +4,9 @@ a.out
 # built application files
 *.apk
 *.ap_
-
+venv
+.vscode
+.DS_Store
 # files for the dex VM
 *.dex
 
