@@ -1,10 +1,10 @@
 cmake-build-debug
 a.out
 .idea
+venv
 # built application files
 *.apk
 *.ap_
-venv
 .vscode
 .DS_Store
 # files for the dex VM

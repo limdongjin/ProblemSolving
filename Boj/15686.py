@@ -24,6 +24,7 @@ def cityChickDist(chicks, houses) -> int:
 
 def main():
     n, m = map(int, input().split())
+
     board = [input().rstrip().split()
              for _ in range(n)]
     houses = [(y, x)
