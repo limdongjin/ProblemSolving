@@ -2,44 +2,30 @@ package main.kotlin
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import kotlin.math.min
 
 private fun bellmanFord(adj: List<MutableList<Pair<Int, Int>>>, src: Int): Array<Int>{
-    fun relax(upper: Array<Int>): Boolean {
+    fun relaxEdges(dist: Array<Int>): Boolean {
         var updated = false
-        for(here in adj.indices) for(i in adj[here].indices){
-            val (there, cost) = adj[here][i]
-            if (upper[there] > upper[here] + cost){
-                upper[there] = upper[here] + cost
+        for(v1 in adj.indices) for((v2, weight) in adj[v1])
+            if (dist[v2] > dist[v1] + weight) {
+                dist[v2] = dist[v1] + weight
                 updated = true
             }
-        }
         return updated
     }
 
-    var updated = false
-    val upper = Array(adj.size) { 987654321 }
-    // val upper = Array(adj.size) { Integer.MAX_VALUE }
-    //    오버플로우 발생 => 틀린 답을 발생시킴
+    val dist = Array(adj.size) { 987654321 }.apply { this[src] = 0 }
 
-    upper[src] = 0
+    repeat(adj.size-1) { relaxEdges(dist) }
 
-    repeat(adj.size) {
-        relax(upper)
-            .also { ret: Boolean ->
-                updated = ret
-                if(!updated) return@repeat
-            }
-    }
-
-    // V 번째 순회에도 완화가 성공했다면, 음수 사이클이 있다.
-    return when(updated){
-        true -> emptyArray()
-        else -> upper
+    return when(relaxEdges(dist)){
+        true -> emptyArray() // 음수 사이클 존재하면 비어있는 배열 리턴
+        else -> dist
     }
 }
 
 private fun solve(n: Int, roadsInfo: Array<Array<Int>>, holesInfo: Array<Array<Int>>): String {
+    // 인접 리스트 생성 :: adj[from][i] = (to, w)
     val adj = buildList<MutableList<Pair<Int, Int>>>(n) {
         repeat(n) {
             add(mutableListOf())
@@ -49,9 +35,10 @@ private fun solve(n: Int, roadsInfo: Array<Array<Int>>, holesInfo: Array<Array<I
             this[it[0]-1].add(it[1]-1 to it[2])
             this[it[1]-1].add(it[0]-1 to it[2])
         }
-        holesInfo.forEach { this[it[0]-1].add(it[1]-1 to -it[2]) }
+        holesInfo.forEach { this[it[0]-1].add(it[1]-1 to -it[2]) } // 웜홀은 음수 가중치
     }
 
+    // 벨만포드
     bellmanFord(adj, 0)
         .also {
             return when(it.isEmpty()){
@@ -69,8 +56,7 @@ private fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
         val roadsInfo = (1..m).map { readInts() }.toTypedArray()
         val holeInfo = (1..w).map { readInts() }.toTypedArray()
 
-        solve(n, roadsInfo, holeInfo)
-            .also { println(it) }
+        println(solve(n, roadsInfo, holeInfo))
     }
 }
 

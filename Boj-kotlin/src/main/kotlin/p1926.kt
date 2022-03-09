@@ -4,58 +4,62 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.LinkedList
 
-val dy = listOf(0, 0, 1, -1)
-val dx = listOf(1, -1, 0, 0)
-val isInRange = { v: Int, end: Int -> (0 <= v) and (v < end) }
+private val moveDir = listOf(
+    0 to 1,
+    0 to -1,
+    1 to 0,
+    -1 to 0
+)
 
-private fun bfs(board: List<MutableList<Int>>,
+private fun bfs(board: Array<Array<Int>>,
                 pos: Pair<Int, Int>, id: Int): Int {
-    when(board[pos.first][pos.second]){
-        0 -> board[pos.first][pos.second] = id
-        -1 -> return id
-        else -> return id
-    }
+    // 빈칸이거나 이미 라벨링된 그림이면, return
+    if (board[pos.first][pos.second] != 0) return id
 
+    board[pos.first][pos.second] = id
     val q = LinkedList<Pair<Int, Int>>().apply { offer(pos) }
 
-    while(q.isEmpty().not()) with(q.poll()){
-        (dy zip dx)
+    while(!q.isEmpty()) with(q.poll()) {
+        moveDir
             .asSequence()
-            .map { d -> (first + d.first) to (second + d.second) }
-            .filter {
-                isInRange(it.first, board.size) and
-                        isInRange(it.second, board[0].size)
-            }
-            .filter { board[it.first][it.second] == 0 }
+            .map { (dy, dx) -> first+dy to second+dx } // => (nextY, nextX)
+            .filter { (y, x) -> y in board.indices && x in board[0].indices } // is valid range?
+            .filter { (y, x) -> board[y][x] == 0 } // Is unlabeled pic?
             .forEach {
-                q.offer(it.first to it.second)
-                board[it.first][it.second] = id
+                q.offer(it)
+                board[it.first][it.second] = id // labelling
             }
     }
 
-    return id+1
+    return id+1 // next label id
 }
 
 private fun solve(board: Array<Array<Int>>){
-    val positions = board.indices.asSequence().flatMap {
-        board[it].indices.map { c -> it to c }
-    }.filter { (y, x) -> board[y][x] == 1 }.toList()
-
-    val board2 = board.map {
-            row -> row.map { it - 1 }.toMutableList()
+    // 1 이 있는 좌표를 저장
+    val positions = board.flatMapIndexed { y, row ->
+        row
+            .filter{ cell -> cell == 1 }
+            .map { x -> y to x }
     }
 
-    var id = 1
-    positions.forEach { id = bfs(board2, it, id) }
+    // 데이터 정규화
+    for (y in board.indices) for(x in board.indices)
+        board[y][x] -= 1
+    // => 빈칸: -1 || 그림: 0
 
-    board2
-        .asSequence()
+    // 라벨링
+    var id = 1 // id: 그림 라벨
+    positions.forEach { id = bfs(board, it, id) }
+
+    // 그림의 개수, 가장 넓은 그림의 넓이를 구한다.
+    board
         .flatten()
-        .filter { it != -1 && it != 0 }
-        .groupingBy { it }.eachCount()
+        .asSequence()
+        .filter { it > 0 }
+        .groupingBy { it }.eachCount() // ex, {1: 4, 2: 2, 3: 9, 4: 1}
         .also {
-            println(it.size)
-            println(it.maxOfOrNull { p -> p.value }?:0)
+            println(it.size) // 그림의 개수 : key 의 개수
+            println(it.maxOfOrNull { p -> p.value }?:0) // 가장 넓은 그림의 넓이 : max value
         }
 }
 
