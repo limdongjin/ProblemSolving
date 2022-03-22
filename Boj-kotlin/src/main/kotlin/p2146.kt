@@ -15,7 +15,7 @@ private val moveDir = listOf(
     0 to 1,
 )
 
-fun labeling(pos: Pair<Int, Int>, id: Int, board: Array<Array<Int>>, edges: ArrayList<Pair<Int, Int>>){
+private fun labeling(pos: Pair<Int, Int>, id: Int, board: Array<Array<Int>>, edges: ArrayList<Pair<Int, Int>>){
     val q: Queue<Pair<Int, Int>> = LinkedList()
     q.offer(pos)
     while (!q.isEmpty()){

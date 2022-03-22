@@ -2,7 +2,6 @@ package main.kotlin
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import javax.swing.text.html.HTML.Attribute.N
 import kotlin.math.pow
 
 private fun myPow(n: Int, k: Int): Int{

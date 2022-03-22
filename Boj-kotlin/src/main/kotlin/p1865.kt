@@ -1,4 +1,4 @@
-package main.kotlin
+package main.kotlin.p1865
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
