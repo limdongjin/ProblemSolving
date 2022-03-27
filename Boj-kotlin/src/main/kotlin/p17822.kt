@@ -20,14 +20,6 @@ private enum class Direction(
 }
 
 
-
-private fun main(){
-    for(d in Direction.values()){
-        println(d.dy to d.dx)
-    }
-}
-
-
 private fun IntArray.getSafeIndex(index: Int): Int {
     return (index%size).run {
         when{
@@ -104,7 +96,7 @@ private fun solve(board: Array<IntArray>, xdkList: Array<IntArray>): Int{
 
     return board.sumOf { it.sum() }
 }
-/*
+
 private fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
     val (n, m, t) = readLine()!!.split(" ").map { it.toInt() }
     val board = Array(n){ IntArray(m){0}}
@@ -123,4 +115,3 @@ private fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
 
     println(solve(board, xdkList))
 }
-*/
