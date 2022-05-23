@@ -10,8 +10,6 @@ import kotlin.math.min
 typealias Pos = Pair<Int, Int>
 const val INF = 987654321
 
-// TODO 다시 제출해보기
-
 fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
     val n = readLine().toInt()
     val buildings = List<Pos>(n) {
