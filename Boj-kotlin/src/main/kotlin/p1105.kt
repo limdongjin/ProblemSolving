@@ -2,7 +2,7 @@ package main.kotlin.p1105
 
 fun main() {
 //    test()
-    val (l, r) = readLine().split(" ")
+    val (l, r) = readLine()!!.split(" ")
     println(solve(l, r))
 }
 

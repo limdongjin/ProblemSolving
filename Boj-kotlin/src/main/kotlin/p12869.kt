@@ -1,6 +1,6 @@
 package main.kotlin.p12859
 
-fun nextPermutations(a: Array<Int>): Boolean{
+fun nextPermutations(a: Array<Int>): Boolean {
     val k = (0 until  a.size-1)
         .lastOrNull { a[it] < a[it+1] } ?: return false
 

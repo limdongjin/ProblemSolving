@@ -3,8 +3,8 @@ package main.kotlin.p25049
 import kotlin.math.max
 
 fun main() = with(System.`in`.bufferedReader()) {
-    require(solve(n = 6, p = listOf(3, 2, 5, 1, 4, 2)) == 34L)
-    require(solve(n = 7, p = listOf(-1, 2, 3, -8, 6, -2, 5)) == 19L)
+//    require(solve(n = 6, p = listOf(3, 2, 5, 1, 4, 2)) == 34L)
+//    require(solve(n = 7, p = listOf(-1, 2, 3, -8, 6, -2, 5)) == 19L)
     val n = readLine().toInt()
     val p = readLine().split(" ").map(String::toLong)
 
