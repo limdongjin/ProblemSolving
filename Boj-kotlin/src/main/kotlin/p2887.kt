@@ -4,11 +4,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.PriorityQueue
 
-// custom class 사용하면 메모리 초과.... 오버헤드 발생하는듯
-// 근데 Pair, Triple 도 class 인데..
-//class Point(val id: Int, val x: Int, val y: Int, val z: Int)
-//class Edge(val from: Int, val to: Int, val cost: Int)
-
+@ExperimentalStdlibApi
 fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
     val n = readLine().toInt()
 
@@ -46,18 +42,31 @@ fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
     println(ans)
 }
 
+@ExperimentalStdlibApi
 class UnionFind(val n: Int) {
     var p = IntArray(n) { it }
 
-    fun find(x: Int): Int {
-        if(p[x] == x) return x
-        p[x] = find(p[x])
-        return p[x]
+    @ExperimentalStdlibApi
+    val find2 = DeepRecursiveFunction<Int, Int> { x ->
+        if(p[x] == x) return@DeepRecursiveFunction x
+        p[x] = callRecursive(p[x])
+        return@DeepRecursiveFunction p[x]
     }
-
+//
+//    @ExperimentalStdlibApi
+//    val union2 = DeepRecursiveFunction<Pair<Int, Int>, Boolean> { (x, y) ->
+//        val a = find2.callRecursive(x)
+//        val b = find2.callRecursive(y)
+//
+//        if ((a == b)) return@DeepRecursiveFunction false
+//
+//        p[b] = a
+//        return@DeepRecursiveFunction true
+//    }
+    @ExperimentalStdlibApi
     fun union(x: Int, y: Int): Boolean {
-        val a = find(x)
-        val b = find(y)
+        val a = find2(x)
+        val b = find2(y)
 
         if ((a == b)) return false
 
