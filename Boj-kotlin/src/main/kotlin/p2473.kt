@@ -12,26 +12,24 @@ fun main() = with(System.`in`.bufferedReader()){
 
 fun solve(n: Int, nums: List<Long>): Triple<Long, Long, Long> {
     return nums.sorted().run {
-        val minTriple: Array<Long> = arrayOf(get(0), get(1), get(2))
-        var minAbsSum = abs(minTriple.sum())
-        fun updateAns(f: Long, s: Long, t: Long) {
-            minTriple.apply { set(0, f); set(1, s); set(2, t) }
-            minAbsSum = abs(minTriple.sum())
-        }
+        val ansTriple = longArrayOf(get(0), get(1), get(2))
+        var ansAbsSum = abs(ansTriple.sum())
 
         topLoop@ for (i in 0..n-3) {
             var l = i+1; var r = n-1
 
             while (l < r){
-                val s = get(i)+get(l)+get(r)
-                if(abs(s) < minAbsSum) updateAns(get(i), get(l), get(r))
-                if(minAbsSum == 0L) break@topLoop
+                val candidate = longArrayOf(get(i), get(l), get(r))
+                val s = candidate.sum()
+
+                if(abs(s) < ansAbsSum) candidate.copyInto(ansTriple).also { ansAbsSum = abs(it.sum()) }
+                if(ansAbsSum == 0L) break@topLoop
 
                 when(s < 0L){ true -> l++; false -> r-- }
             }
         }
 
-        return@run minTriple
+        return@run ansTriple
     }
     .let { Triple(it[0], it[1], it[2])  }
 }
