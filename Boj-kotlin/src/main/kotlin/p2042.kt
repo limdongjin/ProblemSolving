@@ -1,5 +1,4 @@
 package main.kotlin.p2042
-
 fun main() = with(System.`in`.bufferedReader()){
     val (n,m,k) = readLine().split(" ").map(String::toInt)
     val lst: List<Long> = List(n) { readLine().toLong() }
@@ -15,7 +14,6 @@ fun solve(n: Int,
           ops: List<List<Long>>): List<Long> {
     val fenwick = FenwickTree.buildFrom(lst)
     val output = ArrayList<Long>()
-
     ops.forEach { (op, b, c) ->
         when(op){
             1L -> fenwick.update(b.toInt()-1, c)
@@ -40,19 +38,19 @@ class FenwickTree(
     }
 
     private fun prefixSum(toInclusive: Int): Long
-        = generateSequence(toInclusive+1) { it - it.takeLowestOneBit() } // it - it.LSB
-            .takeWhile { it > 0 }
-            .sumOf { tree[it] }
+        = generateSequence(toInclusive+1) { it - it.takeLowestOneBit() }
+            .takeWhile { it > 0 } // pos++; while(pos > 0) { ret += tree[pos]; pos &= pos-1; }
+            .sumOf { tree[it] }   // return ret;
 
     private fun add(pos: Int, value: Long) {
         generateSequence(pos+1) { it + it.takeLowestOneBit() }
             .takeWhile { it < tree.size }
-            .forEach { tree[it] += value }
+            .forEach { tree[it] += value } //pos++;while(pos<tree.size){ tree[pos]+=val; pos+=(pos & -pos);}
     }
 
     companion object {
         fun buildFrom(lst: List<Long>): FenwickTree
             = FenwickTree(n=lst.size, tree=LongArray(lst.size+1))
-                .apply { for((i,v) in lst.withIndex()) add(i, v) }
+                .apply { for((i,v) in lst.withIndex()) add(i, v); }
     }
 }
