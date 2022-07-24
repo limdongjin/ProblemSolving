@@ -8,7 +8,6 @@ fun main() = with(System.`in`.bufferedReader()){
     }
 }
 
-
 fun solve(lst: List<Int>): String {
     val rect1 = Rectangle(bottomLeft = Point(x=lst[0],y=lst[1]), topRight = Point(x=lst[2], y=lst[3]))
     val rect2 = Rectangle(bottomLeft = Point(x=lst[4],y=lst[5]), topRight = Point(x=lst[6], y=lst[7]))
@@ -20,7 +19,6 @@ fun solve(lst: List<Int>): String {
         else -> "a"
     }
 }
-
 fun predicateC(rect1: Rectangle, rect2: Rectangle): Boolean {
     return rect1.bottomLeft == rect2.topRight || rect1.topRight == rect2.bottomLeft
             || rect1.bottomRight == rect2.topLeft || rect1.topLeft == rect2.bottomRight

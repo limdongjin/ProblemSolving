@@ -17,14 +17,17 @@ fun solve(n: Int, m: Int, r: Int, board: Array<Array<Int>>, operations: List<Int
     }
 
     operations.forEach { op ->
-        when(op){
-            1 -> curBoard = curBoard.transform1234(newN=curBoard.size, newM=curBoard[0].size) { curBoard.size-it.first-1 to it.second }
-            2 -> curBoard = curBoard.transform1234(newN=curBoard.size, newM=curBoard[0].size) { it.first to curBoard[0].size-it.second-1 }
-            3 -> curBoard = curBoard.transform1234(newN=curBoard[0].size, newM=curBoard.size) { it.second to curBoard.size-1-it.first }
-            4 -> curBoard = curBoard.transform1234(newN=curBoard[0].size, newM=curBoard.size) { curBoard[0].size-1-it.second to it.first }
-            5 -> curBoard = curBoard.transform5()
-            6 -> curBoard = curBoard.transform6()
+        val transformed = when(op){
+            1 -> curBoard.transform1234(newN=curBoard.size, newM=curBoard[0].size) { curBoard.size-it.first-1 to it.second }
+            2 -> curBoard.transform1234(newN=curBoard.size, newM=curBoard[0].size) { it.first to curBoard[0].size-it.second-1 }
+            3 -> curBoard.transform1234(newN=curBoard[0].size, newM=curBoard.size) { it.second to curBoard.size-1-it.first }
+            4 -> curBoard.transform1234(newN=curBoard[0].size, newM=curBoard.size) { curBoard[0].size-1-it.second to it.first }
+            5 -> curBoard.transform5()
+            6 -> curBoard.transform6()
+            else -> curBoard.also { check(false) }
         }
+
+        curBoard = transformed
     }
 
     curBoard.forEach {
@@ -33,6 +36,10 @@ fun solve(n: Int, m: Int, r: Int, board: Array<Array<Int>>, operations: List<Int
 }
 
 fun Array<Array<Int>>.transform1234(newN: Int, newM: Int, transformNewYX: (Pair<Int, Int>) -> Pair<Int, Int>): Array<Array<Int>> {
+    // 1: 상하 반전
+    // 2: 좌우 반전
+    // 3: 시계 방향 90도 회전
+    // 4: 반시계 방향 90도 회전
     val transformed = Array(newN) { y -> Array<Int>(newM){ 0 } }
     for(y in this.indices) for(x in this[0].indices){
         transformNewYX(y to x).also { (ny, nx) ->

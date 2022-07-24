@@ -40,9 +40,9 @@ fun solve(n: Int, board: Array<IntArray>): Int {
         (adjPositions(it.first) + adjPositions(it.second) + adjPositions(it.third))
             .plus(listOf(it.first, it.second, it.third))
             .asSequence()
-            .filter(inRange)
-            .distinctBy(encode)
-            .takeIf { posList -> posList.count() == 15 }
+            .takeIf { pos -> pos.all(inRange) }
+            ?.distinctBy(encode)
+            ?.takeIf { posList -> posList.count() == 15 }
             ?.sumOf { pos -> board[pos.first][pos.second] }
             ?: INF
     }
@@ -58,13 +58,32 @@ fun <T> List<T>.toTriple(): Triple<T, T, T> {
     require(size == 3)
     return Triple(get(0), get(1), get(2))
 }
+fun <T: Comparable<T>> combinations(r: Int, lst: List<T>): Sequence<List<T>> {
+    return sequence {
+        val n = lst.size
+        val selected: Array<Boolean> = Array(n) { false }
 
-fun combinations(n: Int, lst: List<Int>): List<List<Int>> = when(n){
-    0 -> listOf(emptyList())
-    else -> when(lst.isNotEmpty()){
-        true -> combinations(n-1, lst)
-                    .map(listOf(lst[0])::plus)
-                    .plus(combinations(n, lst.subList(1, lst.size)))
-        false -> emptyList()
+        selected.fill( element = true, fromIndex = n-r, toIndex = n)
+
+        do {
+            yield(lst.filterIndexed { i, _ -> selected[i] })
+        } while(nextPermutation(selected))
     }
 }
+
+fun <T: Comparable<T>> nextPermutation(arr: Array<T>): Boolean {
+    // Find the largest index k such that a[k] < a[k+1].
+    val k = (0 until  arr.size-1)
+        .lastOrNull { arr[it] < arr[it+1] }
+        ?: return false
+
+    // Find the largest index i such that a[k] < a[i]
+    val i = (k+1 until arr.size).last { arr[k] < arr[it] }
+
+    arr.swap(i, k)
+
+    arr.reverse(k+1, arr.size)
+
+    return true
+}
+fun <T> Array<T>.swap(i: Int, j: Int) = this[i].also { this[i] = this[j] }.let { this[j] = it }

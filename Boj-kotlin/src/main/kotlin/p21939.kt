@@ -46,6 +46,10 @@ private fun solve(problems: List<Pair<Int, Int>>, commands: List<Pair<String, Li
     return
 }
 
+//private fun solve2(problems: List<Pair<Int, Int>>, commands: List<Pair<String, List<Int>>>) {
+//    Sequence
+//}
+
 private fun main() = with(BufferedReader(InputStreamReader(System.`in`))){
     val n = readLine()!!.toInt()
     // (번호, 난이도)

@@ -11,25 +11,25 @@ fun solve(n: Int, words: List<String>): String
     = words.asSequence().flatMap(::allAnagrams).joinToString("\n")
 
 fun allAnagrams(word: String) = sequence {
-    val arr = word.encoded().sorted().toIntArray()
+    val arr = word.toCharArray().sorted().toTypedArray()
 
     do {
-        yield(arr.decoded())
-    } while (nextPermutation(arr))
+        yield(arr.joinToString(""))
+    } while(nextPermutation(arr))
 }
-fun String.encoded(): List<Int> = this.map { it - 'a' }
-fun IntArray.decoded(): String = this.map { 'a'.plus(it) }.joinToString("")
-
-fun nextPermutation(arr: IntArray): Boolean {
+fun <T: Comparable<T>> nextPermutation(arr: Array<T>): Boolean {
+    // Find the largest index k such that a[k] < a[k+1].
     val k = (0 until  arr.size-1)
         .lastOrNull { arr[it] < arr[it+1] }
         ?: return false
 
+    // Find the largest index i such that a[k] < a[i]
     val i = (k+1 until arr.size).last { arr[k] < arr[it] }
 
     arr.swap(i, k)
-    arr.reverse(fromIndex = k+1, toIndex = arr.size)
+
+    arr.reverse(k+1, arr.size)
 
     return true
 }
-fun IntArray.swap(i: Int, j: Int) = this[i].also { this[i] = this[j] }.let { this[j] = it }
+fun <T> Array<T>.swap(i: Int, j: Int) = this[i].also { this[i] = this[j] }.let { this[j] = it }
